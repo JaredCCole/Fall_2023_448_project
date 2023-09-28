@@ -1,0 +1,9 @@
+Bayesian Classifier
+
+
+
+Logistic Regression
+
+
+
+Support Vector Machines
