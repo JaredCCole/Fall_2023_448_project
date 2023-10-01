@@ -16,7 +16,7 @@ nlp = spacy.load("en_core_web_sm")
 		* remove blank data                     (Done)
 		* remove nonsensical data               (In Progress)
 	* Define Basic Features                     (Done)
-	* Split the data into training and dev-test (Not started)
+	* Split the data into training and dev-test (Not Done)
 	* Extract Features from each input          (Done)
 	* Parallelize feature extraction            (Done)
 
@@ -67,6 +67,7 @@ Notes:
 	- "a", "an", "the" --> DT
 	- ends in "ed" --> most likely past tense
 	- "and", "but", and "or" --> CC
+	- next word?
 
 	
 Feature structure
