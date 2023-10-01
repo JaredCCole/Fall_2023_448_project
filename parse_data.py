@@ -20,6 +20,7 @@ nlp = spacy.load("en_core_web_sm")
 	* Extract Features from each input          (Done)
 	* Parallelize feature extraction            (Done)
 
+
 '''
 
 
@@ -108,7 +109,7 @@ def construct_feature(input_word_pair) -> dict:
 	feature['suffix'] = input_word[-2:]
 	feature['capitalized'] = input_word.istitle()
 	#feature['base_form'] = nlp(input_word)[0].lemma_
-	feature['word_length'] = input_word
+	feature['word_length'] = len(input_word)
 	feature['ends_in_ly'] = 1 if input_word[-2:] == 'ly' else 0
 	feature['ends_in_ed'] = 1 if input_word[-2:] == 'ed' else 0
 	feature['ends_in_ing'] = 1 if input_word[-3:] == 'ing' else 0

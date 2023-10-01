@@ -7,3 +7,5 @@ Logistic Regression
 
 
 Support Vector Machines
+
+
