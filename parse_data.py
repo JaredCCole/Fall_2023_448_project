@@ -1,6 +1,7 @@
 import spacy
 import multiprocess as mp
 import time
+import json
 
 
 nlp = spacy.load("en_core_web_sm")
@@ -31,7 +32,7 @@ def parse(path: str) -> list:
 	'''
 
 	#read the input file
-	with open(path, "r", encoding='utf-8') as f:
+	with open(path, "r", encoding='utf-8-sig') as f:
 		contents = f.read()
 
 	contents = contents.split("\n")
@@ -107,7 +108,7 @@ def construct_feature(input_word_pair) -> dict:
 	feature['word_form'] = input_word
 	feature['prefix'] = input_word[:2]
 	feature['suffix'] = input_word[-2:]
-	feature['capitalized'] = input_word.istitle()
+	feature['capitalized'] = 1 if input_word.istitle() else 0
 	#feature['base_form'] = nlp(input_word)[0].lemma_
 	feature['word_length'] = len(input_word)
 	feature['ends_in_ly'] = 1 if input_word[-2:] == 'ly' else 0
@@ -154,8 +155,21 @@ def extract_features(data: list) -> list:
 	return features
 
 
+def generate_features(sample=False):
+	# constructs features and dumps to json
+	
+	data = parse("./train.txt")
 
+	if not sample:
+		# generate all features
+		features = extract_features(data)
+	else:
+		data = [data[i] for i in range(sample)]
+		features = extract_features(data)
 
+	with open("./features.json", "w") as file:
+		json.dump(features, file)
 
+	return features
 
 
