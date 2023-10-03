@@ -1,4 +1,3 @@
-Notes:
  	Basic Feature Definitions:
 	- Word form
 	- Suffix
@@ -9,12 +8,18 @@ Notes:
 	- ends in "ly"                --> most likely an adverb
 	- "a", "an", "the"            --> DT
 	- ends in "ed"                --> most likely past tense verb
+	- ends in "ify"               --> most a verb		       e.g. "verify"/"purify"
+	- ends in "ate"               --> most a verb		       e.g. "facilitate"/"illustrate"
 	- ends in "tion" or "sion"    --> most liekly a noun
 	- ends in "ment"              --> most likely a noun
+	- ends in "ity"               --> most likely a noun	       e.g. "unity"/"responsibility"
+	- ends in "er"		      --> most likely a noun	       e.g. "runner"/"fighter"
 	- ends in "ies"               --> most likely a plural noun
 	- ends in "xes"               --> most likely a plural noun    e.g. "boxes"/"foxes"
 	- ends in "er" or "or"        --> most likely a singular noun  e.g. "teacher"/"worker"/"lawyer"
 	- ends in "able" or "ible"    --> most likely an adjective     e.g. "likable"/""
+	- ends in "less"	      --> most likely an adjective     e.g. "hopeless"/"careless"
+	- ends in "ful"		      --> most likely an adjective     e.g. "peaceful"/"doubtful"
 	- "and", "but", and "or"      --> CC
 	- ","                         --> ,
 	- "."                         --> .
@@ -23,9 +28,11 @@ Notes:
 	- contains number             --> CD
 	- "+" or "="                  --> SYM
 	- after "is"                  --> likely a noun or adjective  
-	- after "a"/"an"/"the"        --> likely a noun or adjective   e.g. "the dog"/"the happy dog"
+	- after "the"                 --> likely a noun or adjective   e.g. "the dog"/"the happy dog"
 	- begins with "un"            --> likely an adjective          e.g. "unattractive"/"unlikely"
 	- begins with "in"/"il"/"im"  --> likely an adjective          e.g. "illegal"/"inactive"
+	- begins with "non"	      --> likely an adjective	       e.g. "nonexistent"/"nonchalant"
 	- begins with "dis"           --> likely a verb                e.g. "disconnect","dislike"
 	- begins with "re"            --> likely a verb                e.g. "rewrite"/"redo"
 	- next word ?
+
