@@ -20,7 +20,7 @@ nlp = spacy.load("en_core_web_sm")
 	* Split the data into training and dev-test (Not Done)
 	* Extract Features from each input          (Done)
 	* Parallelize feature extraction            (Done)
-
+	* have a means of getting stats on data     (In Progress)
 
 '''
 
@@ -53,6 +53,17 @@ def parse(path: str) -> list:
 
 
 
+def get_stats(data: list) -> dict:
+	'''
+	Input: data set (list of words)
+	Output: 
+		{
+			
+		}
+	'''
+
+
+
 
 
 '''
@@ -60,16 +71,33 @@ Notes:
  	Basic Feature Definitions:
 	- Word form
 	- Suffix
-	- Prefix
-	- Capitalization
+	- Capitalization              --> may be proper noun
 	- Word lemma (base form)
-	- Word Frequency
+	- Word Frequency ?
 	- word length
-	- ends in "ly" --> most likely an adverb
-	- "a", "an", "the" --> DT
-	- ends in "ed" --> most likely past tense
-	- "and", "but", and "or" --> CC
-	- next word?
+	- ends in "ly"                --> most likely an adverb
+	- "a", "an", "the"            --> DT
+	- ends in "ed"                --> most likely past tense verb
+	- ends in "tion" or "sion"    --> most liekly a noun
+	- ends in "ment"              --> most likely a noun
+	- ends in "ies"               --> most likely a plural noun
+	- ends in "xes"               --> most likely a plural noun    e.g. "boxes"/"foxes"
+	- ends in "er" or "or"        --> most likely a singular noun  e.g. "teacher"/"worker"/"lawyer"
+	- ends in "able" or "ible"    --> most likely an adjective     e.g. "likable"/""
+	- "and", "but", and "or"      --> CC
+	- ","                         --> ,
+	- "."                         --> .
+	- "$"                         --> $
+	- "''"                        --> ''
+	- contains number             --> CD
+	- "+" or "="                  --> SYM
+	- after "is"                  --> likely a noun or adjective  
+	- after "a"/"an"/"the"        --> likely a noun or adjective   e.g. "the dog"/"the happy dog"
+	- begins with "un"            --> likely an adjective          e.g. "unattractive"/"unlikely"
+	- begins with "in"/"il"/"im"  --> likely an adjective          e.g. "illegal"/"inactive"
+	- begins with "dis"           --> likely a verb                e.g. "disconnect","dislike"
+	- begins with "re"            --> likely a verb                e.g. "rewrite"/"redo"
+	- next word ?
 
 	
 Feature structure
@@ -88,6 +116,7 @@ Feature structure
 		'a_an_the': 1,       # can be a 0 or 1
 		'ends_in_ed': 0,     # can be a 0 or 1
 		'ends_in_ing': 0,    # can be a 0 or 1
+		'ends_in_tion': 0    # can be a 0 or 1 
 		'':
 		...
 
@@ -102,6 +131,8 @@ def construct_feature(input_word_pair) -> dict:
 	Input:	input_word is the word we are constructing features for
 	Output: feature
 	'''
+
+
 	input_word = input_word_pair[0]
 
 	feature = dict()

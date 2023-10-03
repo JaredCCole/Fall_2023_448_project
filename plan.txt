@@ -1,3 +1,4 @@
+Notes:
  	Basic Feature Definitions:
 	- Word form
 	- Suffix
@@ -22,10 +23,9 @@
 	- contains number             --> CD
 	- "+" or "="                  --> SYM
 	- after "is"                  --> likely a noun or adjective  
-	- after "the"                 --> likely a noun or adjective   e.g. "the dog"/"the happy dog"
+	- after "a"/"an"/"the"        --> likely a noun or adjective   e.g. "the dog"/"the happy dog"
 	- begins with "un"            --> likely an adjective          e.g. "unattractive"/"unlikely"
 	- begins with "in"/"il"/"im"  --> likely an adjective          e.g. "illegal"/"inactive"
 	- begins with "dis"           --> likely a verb                e.g. "disconnect","dislike"
 	- begins with "re"            --> likely a verb                e.g. "rewrite"/"redo"
 	- next word ?
-

@@ -9,9 +9,11 @@ import json
 	TO DO:
 		* Convert data into tensors                     (In Progress)
 			* need to represent the words numerically   (Not Done)
+				--> i am thinking we should use one hot 
+					encoding 
 		* Build the model                               (In Progress)
 			* 
-		* 
+		* break the data into batches
 
 '''
 
@@ -34,6 +36,8 @@ def build_tensors(features):
 
 
 
+
+
 if __name__ == "__main__":
 
 	# first load the "./features.json" file
@@ -42,8 +46,7 @@ if __name__ == "__main__":
 	# convert the data into tensors
 	feature_tensors = build_tensors(data)
 
-
-	# instaniate the model
+	# instantiate the model
 
 
 
