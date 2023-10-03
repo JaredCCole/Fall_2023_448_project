@@ -4,7 +4,7 @@ import time
 import json
 
 
-nlp = spacy.load("en_core_web_sm")
+#nlp = spacy.load("en_core_web_sm")
 
 
 '''
@@ -132,20 +132,47 @@ def construct_feature(input_word_pair) -> dict:
 	Output: feature
 	'''
 
-
 	input_word = input_word_pair[0]
-
 	feature = dict()
+
+	if len(input_word) < 4:
+		feature['ends_in_ing'] = 0
+		feature['ends_in_tion_sion'] = 0
+		feature['ends_in_ment'] = 0 
+		feature['ends_in_ies'] = 0
+		feature['ends_in_xes'] = 0
+		feature['ends_in_able_ible'] = 0
+		feature['ends_in_ence'] = 0
+	
+	else:
+		feature['ends_in_ing'] = 1 if input_word[-3:] == 'ing' else 0
+		feature['ends_in_tion_sion'] = 1 if input_word[-4:] == 'tion' or input_word[-4:] == 'sion' else 0
+		feature['ends_in_ment'] = 1 if input_word[-4:] == 'ment' else 0
+		feature['ends_in_ies'] = 1 if input_word[-3:] == 'ing' else 0
+		feature['ends_in_xes'] = 1 if input_word[-3:] == 'ing' else 0
+		feature['ends_in_able_ible'] = 1 if input_word[-3:] == 'ing' else 0
+		feature['ends_in_ence'] = 1 if input_word[-4:] == 'ence' else 0
+		
+
+
 	feature['word_form'] = input_word
-	feature['prefix'] = input_word[:2]
-	feature['suffix'] = input_word[-2:]
 	feature['capitalized'] = 1 if input_word.istitle() else 0
-	#feature['base_form'] = nlp(input_word)[0].lemma_
 	feature['word_length'] = len(input_word)
 	feature['ends_in_ly'] = 1 if input_word[-2:] == 'ly' else 0
 	feature['ends_in_ed'] = 1 if input_word[-2:] == 'ed' else 0
-	feature['ends_in_ing'] = 1 if input_word[-3:] == 'ing' else 0
+	feature['ends_in_er_or'] = 1 if input_word[-3:] == 'ing' else 0
+	feature['and_or_but'] = 1 if input_word in ['and', 'but', 'or'] else 0
 	feature['a_an_the'] = 1 if input_word in ['a', 'an', 'the'] else 0
+	feature['comma'] = 1 if input_word == ',' else 0
+	feature['period'] = 1 if input_word == '.' else 0
+	feature['dollar_sign'] = 1 if input_word == '$' else 0
+	feature['single quotes'] = 1 if input_word == "''" else 0
+	feature['contains_number'] = 1 if any(chr.isdigit() for chr in input_word) else 0
+	feature['plus_or_equals'] = 1 if input_word in ['+', '='] else 0
+	feature['begins_with_un'] = 1 if input_word[:2] == 'un' else 0
+	feature['begins_with_in_il_im'] = 1 if input_word[:2] in ['in','il','im'] else 0
+	feature['beings_with_dis'] = 1 if input_word[:3] == 'dis' else 0
+	feature['begins_with_re'] = 1 if input_word[:2] == 're' else 0
 
 	return feature
 
