@@ -10,6 +10,7 @@ def process_data(filename):
 def main():
     data, tags = process_data('train.txt')
     add_features(data)
+    # print(pd.__version__)
     print(data.head())
 
 def add_features(data):
@@ -37,17 +38,17 @@ def add_features(data):
         X- begins with "in"/"il"/"im"  --> likely an adjective          e.g. "illegal"/"inactive"
         - begins with "dis" or "re"           --> likely a verb                e.g. "disconnect","dislike"
     '''
-    data['capitalized'] = data['token'].apply(lambda x: 1 if x.istitle() else 0)
-	# data['word_length'] = data['token'].apply(lambda x: len(x))
-	# data['and_or_but'] = 1 if input_word in ['and', 'but', 'or'] else 0
-	# data['a_an_the'] = 1 if input_word in ['a', 'an', 'the'] else 0
-	# data['comma'] = 1 if input_word == ',' else 0
-	# data['period'] = 1 if input_word == '.' else 0
-	# data['dollar_sign'] = 1 if input_word == '$' else 0
-	# data['single_quotes'] = 1 if input_word == "''" else 0
-	# data['contains_number'] = 1 if any(chr.isdigit() for chr in input_word) else 0
-	# data['plus_or_equals'] = 1 if input_word in ['+', '='] else 0
-	# data['prefix'] = get_prefix_num(input_word)
+    data['capitalized'] = data['token'].apply(lambda x: 1 if str(x).istitle() else 0)
+    data['word_length'] = data['token'].apply(lambda x: len(str(x)))
+    data['and_or_but'] = data['token'].apply(lambda x: 1 if str(x) in ['and','or','but'] else 0)
+    data['a_an_the'] = data['token'].apply(lambda x: 1 if str(x) in ['a','and','the'] else 0)
+    data['comma'] = data['token'].apply(lambda x: 1 if str(x) == ',' else 0)
+    data['period'] = data['token'].apply(lambda x: 1 if str(x) == '.' else 0)
+    data['dollar_sign'] = data['token'].apply(lambda x: 1 if str(x) == '$' else 0)
+    data['quotes_reg'] = data['token'].apply(lambda x: 1 if str(x) == '\'\'' else 0)
+    data['quotes_slant'] = data['token'].apply(lambda x: 1 if str(x) == '``' else 0)
+    data['contains_number'] = data['token'].apply(lambda x: 1 if any(chr.isdigit() for chr in str(x)) else 0)
+    data['plus_or_equals'] = data['token'].apply(lambda x: 1 if str(x) in ['+','='] else 0)
 
 if __name__ == '__main__':
     main()
