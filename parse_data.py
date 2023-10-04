@@ -166,12 +166,12 @@ def construct_feature(input_word_pair) -> dict:
 	feature['comma'] = 1 if input_word == ',' else 0
 	feature['period'] = 1 if input_word == '.' else 0
 	feature['dollar_sign'] = 1 if input_word == '$' else 0
-	feature['single quotes'] = 1 if input_word == "''" else 0
+	feature['single_quotes'] = 1 if input_word == "''" else 0
 	feature['contains_number'] = 1 if any(chr.isdigit() for chr in input_word) else 0
 	feature['plus_or_equals'] = 1 if input_word in ['+', '='] else 0
 	feature['begins_with_un'] = 1 if input_word[:2] == 'un' else 0
 	feature['begins_with_in_il_im'] = 1 if input_word[:2] in ['in','il','im'] else 0
-	feature['beings_with_dis'] = 1 if input_word[:3] == 'dis' else 0
+	feature['begins_with_dis'] = 1 if input_word[:3] == 'dis' else 0
 	feature['begins_with_re'] = 1 if input_word[:2] == 're' else 0
 
 	return feature
