@@ -18,10 +18,19 @@ import time
 
 '''
 
+# Each word should be mapped to an integer
+# Global variable (vocab)
+vocab = {}
+
+def construct_vocab(features):
+	for n,d in enumerate(features):
+		vocab[d['word_form']] = n
+
+
 def build_tensors(features):
 
 	feature_tensors = {
-		#'word_form': torch.tensor([int(d['word_form']) for d in features]),
+		'word_form': torch.tensor([vocab[d['word_form']] for d in features]),
 		'capitalized': torch.tensor([d['capitalized'] for d in features], dtype=torch.bool),
 		'word_length': torch.tensor([d['word_length'] for d in features], dtype=torch.long),
 		'ends_in_ly': torch.tensor([d['ends_in_ly'] for d in features], dtype=torch.bool),
@@ -60,11 +69,16 @@ if __name__ == "__main__":
 	# first load the "./features.json" file
 	data = json.load(open('./features.json'))
 
+	# construct the vocabulary
+	construct_vocab(data)
+
+
 	# convert the data into tensors
 	feature_tensors = build_tensors(data)
 
 	end = time.time()
 	print(f"* Building tensors took: {end - start}")
+
 
 	# instantiate the model
 
