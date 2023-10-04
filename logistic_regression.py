@@ -10,6 +10,7 @@ def process_data(filename):
 def main():
     data, tags = process_data('train.txt')
     add_features(data)
+    print(data.head())
 
 def add_features(data):
     '''
@@ -36,8 +37,8 @@ def add_features(data):
         X- begins with "in"/"il"/"im"  --> likely an adjective          e.g. "illegal"/"inactive"
         - begins with "dis" or "re"           --> likely a verb                e.g. "disconnect","dislike"
     '''
-    data['capitalized'] = 1 if data['token'].istitle() else 0
-	# data['word_length'] = len(input_word)
+    data['capitalized'] = data['token'].apply(lambda x: 1 if x.istitle() else 0)
+	# data['word_length'] = data['token'].apply(lambda x: len(x))
 	# data['and_or_but'] = 1 if input_word in ['and', 'but', 'or'] else 0
 	# data['a_an_the'] = 1 if input_word in ['a', 'an', 'the'] else 0
 	# data['comma'] = 1 if input_word == ',' else 0
