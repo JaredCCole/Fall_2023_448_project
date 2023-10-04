@@ -1,10 +1,8 @@
-import spacy
 import multiprocess as mp
 import time
 import json
 
 
-#nlp = spacy.load("en_core_web_sm")
 
 
 '''
@@ -13,16 +11,20 @@ import json
 	feature_vector representation.
 
 	TO DO:
-	* format data into (word, label) pairs      (Done)
-		* remove blank data                     (Done)
-		* remove nonsensical data               (In Progress)
-	* Define Basic Features                     (Done)
-	* Split the data into training and dev-test (Not Done)
-	* Extract Features from each input          (Done)
-	* Parallelize feature extraction            (Done)
-	* have a means of getting stats on data     (In Progress)
+	* format data into (word, label) pairs       (Done)
+		* remove blank data                      (Done)
+	* Define Basic Features                      (Done)
+	* Split the data into training and dev-test  (Not Done)
+	* Extract Features from each input           (Done)
+	* Parallelize feature extraction             (Done)
+	* have a means of getting stats on data      (In Progress) * Don't know if we need this
+	* should we include previous/next word POS??
+	* 
+
 
 '''
+
+
 
 
 def parse(path: str) -> list:
@@ -40,27 +42,18 @@ def parse(path: str) -> list:
 	# remove empty strings from the list
 	contents = [i for i in contents if i != ""]
 
-	set_labels = set()
+	# set_labels = set()
 
 	# (word, label) pairs
 	pairs = [(i.split(" ")[0], i.split(" ")[1]) for i in contents]
 
-
+	'''
 	for i in contents:
 		set_labels.add(i[1])
+	'''
 
 	return pairs
 
-
-
-def get_stats(data: list) -> dict:
-	'''
-	Input: data set (list of words)
-	Output: 
-		{
-			
-		}
-	'''
 
 
 
@@ -124,6 +117,9 @@ Feature structure
 
 '''
 
+
+
+
 # helper function for creating features
 
 def construct_feature(input_word_pair) -> dict:
@@ -132,35 +128,42 @@ def construct_feature(input_word_pair) -> dict:
 	Output: feature
 	'''
 
+	suffixes = {'ed': 1, 'tion': 2, 'sion': 3, 'ment': 4, 'ies': 5, 'xes': 6, 'er': 7, 'or': 8, 'able': 9, 'ible': 10, 'ence': 11, 'ly': 12, 'ing': 13}
+	prefixes = {'un': 1, 'in': 2, 'il': 3, 'im': 4, 'dis': 5, 're': 6}
+
+	def get_prefix_num(word: str) -> int:
+
+		for key in prefixes:
+			if word.startswith(key):
+				return prefixes[key]
+
+		return 0  # no prefix
+
+
+	def get_suffix_num(word: str) -> int:
+
+		for key in suffixes:
+			if word.endswith(key):
+				return suffixes[key]
+
+		return 0  # no suffix
+
+
+
 	input_word = input_word_pair[0]
 	feature = dict()
 
 	if len(input_word) < 4:
-		feature['ends_in_ing'] = 0
-		feature['ends_in_tion_sion'] = 0
-		feature['ends_in_ment'] = 0 
-		feature['ends_in_ies'] = 0
-		feature['ends_in_xes'] = 0
-		feature['ends_in_able_ible'] = 0
-		feature['ends_in_ence'] = 0
+		feature['suffix'] = 0
 	
 	else:
-		feature['ends_in_ing'] = 1 if input_word[-3:] == 'ing' else 0
-		feature['ends_in_tion_sion'] = 1 if input_word[-4:] == 'tion' or input_word[-4:] == 'sion' else 0
-		feature['ends_in_ment'] = 1 if input_word[-4:] == 'ment' else 0
-		feature['ends_in_ies'] = 1 if input_word[-3:] == 'ing' else 0
-		feature['ends_in_xes'] = 1 if input_word[-3:] == 'ing' else 0
-		feature['ends_in_able_ible'] = 1 if input_word[-3:] == 'ing' else 0
-		feature['ends_in_ence'] = 1 if input_word[-4:] == 'ence' else 0
+		feature['suffix'] = get_suffix_num(input_word)
 		
 
 
 	feature['word_form'] = input_word
 	feature['capitalized'] = 1 if input_word.istitle() else 0
 	feature['word_length'] = len(input_word)
-	feature['ends_in_ly'] = 1 if input_word[-2:] == 'ly' else 0
-	feature['ends_in_ed'] = 1 if input_word[-2:] == 'ed' else 0
-	feature['ends_in_er_or'] = 1 if input_word[-3:] == 'ing' else 0
 	feature['and_or_but'] = 1 if input_word in ['and', 'but', 'or'] else 0
 	feature['a_an_the'] = 1 if input_word in ['a', 'an', 'the'] else 0
 	feature['comma'] = 1 if input_word == ',' else 0
@@ -169,10 +172,7 @@ def construct_feature(input_word_pair) -> dict:
 	feature['single_quotes'] = 1 if input_word == "''" else 0
 	feature['contains_number'] = 1 if any(chr.isdigit() for chr in input_word) else 0
 	feature['plus_or_equals'] = 1 if input_word in ['+', '='] else 0
-	feature['begins_with_un'] = 1 if input_word[:2] == 'un' else 0
-	feature['begins_with_in_il_im'] = 1 if input_word[:2] in ['in','il','im'] else 0
-	feature['begins_with_dis'] = 1 if input_word[:3] == 'dis' else 0
-	feature['begins_with_re'] = 1 if input_word[:2] == 're' else 0
+	feature['prefix'] = get_prefix_num(input_word)
 
 	return feature
 

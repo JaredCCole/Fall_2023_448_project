@@ -1,4 +1,5 @@
 import torch
+from torch.utils.data import TensorDataset, DataLoader
 import json
 import time
 
@@ -9,12 +10,11 @@ import time
 
 	TO DO:
 		* Convert data into tensors                     (In Progress)
-			* need to represent the words numerically   (Not Done)
-				--> i am thinking we should use one hot 
-					encoding 
+			* need to represent the words numerically   (Done)
+			* convert the labels into a tensor          (In Progress)
 		* Build the model                               (In Progress)
 			* 
-		* break the data into batches
+		* have a set of labels and map them to numbers
 
 '''
 
@@ -27,23 +27,16 @@ def construct_vocab(features):
 		vocab[d['word_form']] = n
 
 
+
+
 def build_tensors(features):
 
 	feature_tensors = {
 		'word_form': torch.tensor([vocab[d['word_form']] for d in features]),
 		'capitalized': torch.tensor([d['capitalized'] for d in features], dtype=torch.bool),
 		'word_length': torch.tensor([d['word_length'] for d in features], dtype=torch.long),
-		'ends_in_ly': torch.tensor([d['ends_in_ly'] for d in features], dtype=torch.bool),
-		'ends_in_ed': torch.tensor([d['ends_in_ed'] for d in features], dtype=torch.bool),
-		'ends_in_ing': torch.tensor([d['ends_in_ing'] for d in features], dtype=torch.bool),
+		'suffix': torch.tensor([d['suffix'] for d in features], dtype=torch.long),
 		'a_an_the': torch.tensor([d['a_an_the'] for d in features], dtype=torch.bool),
-		'ends_in_tion_sion': torch.tensor([d['ends_in_tion_sion'] for d in features], dtype=torch.bool),
-		'ends_in_ment': torch.tensor([d['ends_in_ment'] for d in features], dtype=torch.bool),
-		'ends_in_ies': torch.tensor([d['ends_in_ies'] for d in features], dtype=torch.bool),
-		'ends_in_xes': torch.tensor([d['ends_in_xes'] for d in features], dtype=torch.bool),
-		'ends_in_able_ible': torch.tensor([d['ends_in_able_ible'] for d in features], dtype=torch.bool),
-		'ends_in_ence': torch.tensor([d['ends_in_ence'] for d in features], dtype=torch.bool),
-		'ends_in_er_or': torch.tensor([d['ends_in_er_or'] for d in features], dtype=torch.bool),
 		'and_or_but': torch.tensor([d['and_or_but'] for d in features], dtype=torch.bool),
 		'comma': torch.tensor([d['comma'] for d in features], dtype=torch.bool),
 		'period': torch.tensor([d['period'] for d in features], dtype=torch.bool),
@@ -51,16 +44,44 @@ def build_tensors(features):
 		'single_quotes': torch.tensor([d['single_quotes'] for d in features], dtype=torch.bool),
 		'contains_number': torch.tensor([d['contains_number'] for d in features], dtype=torch.bool),
 		'plus_or_equals': torch.tensor([d['plus_or_equals'] for d in features], dtype=torch.bool),
-		'begins_with_un': torch.tensor([d['begins_with_un'] for d in features], dtype=torch.bool),
-		'begins_with_in_il_im': torch.tensor([d['begins_with_in_il_im'] for d in features], dtype=torch.bool),
-		'begins_with_dis': torch.tensor([d['begins_with_dis'] for d in features], dtype=torch.bool),
-		'begins_with_re': torch.tensor([d['begins_with_re'] for d in features], dtype=torch.bool),
+		'prefix': torch.tensor([d['prefix'] for d in features], dtype=torch.long),
 	}
 
 	return feature_tensors
 
 
 
+
+
+'''
+class BayesianClassifier:
+
+	def __init__(self):
+		# init the model here
+		
+
+
+	def train(self, X, Y, epochs):
+		'''
+		Input:
+			X: tensor containing features
+			Y: tensor containing labels
+		Output:
+			model parameters
+		'''
+		return
+
+
+	def predict(self, X):
+		'''
+		Input:
+			X: tensor containing input features
+		Output:
+			Y: tensor containing predicted labels
+		'''
+
+		return
+'''
 
 
 
@@ -78,6 +99,14 @@ if __name__ == "__main__":
 
 	end = time.time()
 	print(f"* Building tensors took: {end - start}")
+
+
+	# convert labels into tensors
+	labels = []
+
+
+	# dataset
+	#dataset = TensorDataset(feature_tensors, labels)
 
 
 	# instantiate the model
